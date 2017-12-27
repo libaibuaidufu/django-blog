@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+{% load staticfiles %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>随风潜入夜</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <style>
+        .dropdown-menu {
+            min-width: 80px;
+        }
+    </style>
+</head>
+
+<body>
+{% if image %}
+    {% for x in image %}
+        <div class="container-full"
+             style="background:url(
+                     {{ MEDIA_URL }}{{ x.image }}) top repeat-y;background-size:100% 100%;min-height: 1000px">
+    {% endfor %}
+{% else %}
+    <div class="container-full"
+         style="background:url({% static 'back1.jpg' %}) top repeat-y;background-size:100% 100%;min-height: 1000px">
+{% endif %}
+<div class="container">
+
+    <div class="col-md-12 column">
+        <div class="row clearfix">
+            <div class="col-md-2 column" style="padding-right: 0px;padding-left: 70px;padding-top: 30px">
+                <table class="table table-striped table-bordered table-hover right" style="width: 120px">
+                    <thead style="">
+                    {% if request.user.is_authenticated %}
+                        <tr>
+                            <th class="text-center" style="color: #00a0e9">
+                                <div class="dropdown">
+                                    <div class="btn dropdown-toggle" type="button" id="dropdownMenu1"
+                                         data-toggle="dropdown">
+                                        {{ request.user.username }}
+                                        <span class="caret"></span>
+                                    </div>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="opacity:0.8;
+  filter:alpha(opacity=80); /* IE8 及更早版本 */ background-color:#ffffff">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                                   href="{% url 'user_datail' %}">个人中心</a>
+                                        </li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1"
+                                                                   href="{% url 'logout' %}">退出</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th class="text-center"><a data-toggle="modal" data-target="#myModal">
+                                登录
+                            </a>
+                                <a data-toggle="modal" data-target="#registerModal">注册</a>
+                            </th>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th class="text-center"><a href="?lb=qb">全部</a></th>
+                    </tr>
+                    {% for tag in all_tags %}
+                        <tr>
+
+                            <th class="text-center"><a href="?lb={{ tag.name }}">{{ tag.name }}</a></th>
+
+                        </tr>
+                    {% endfor %}
+                    </thead>
+                </table>
+            </div>
+
+            <form class="form form-horizontal" action="{% url 'login' %}" id="loginform" name="loginform" method="post"
+                  role="form" enctype="application/x-www-form-urlencoded">
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" style="margin-top: 150px;width: 350px">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-bottom: 0px">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×
+                                </button>
+                                <h4 class="modal-title  text-center" id="myModalLabel">
+                                    登录
+                                </h4>
+                                <p class="text-danger" id="loginfail"></p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="{% if login_form.errors.username %}errorput{% endif %}">
+                                    <label for="username">用户名</label>
+                                    <input type="text" class="form-control" name='username'
+                                           id="username"
+                                           placeholder="请输入用户名">
+                                </div>
+                                <div class="{% if login_form.errors.username %}errorput{% endif %}">
+
+                                    <label for="password">密码</label>
+                                    <input type="password" class="form-control" name="password"
+                                           id="password"
+                                           placeholder="请输入密码">
+                                </div>
+                                {% csrf_token %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <a id='forgetpwd' class="btn btn-default">忘记密码?</a>
+                                <a class="btn btn-primary" id="jsLeftBtn">登陆</a>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+            </form>
+            <form class="form form-horizontal" action="{% url 'register' %}" id="registerform" name="registerform"
+                  method="post"
+                  role="form" enctype="application/x-www-form-urlencoded">
+
+                <div class="modal fade" id="registerModal" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" style="margin-top: 150px;width: 350px">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding-bottom: 0px">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×
+                                </button>
+                                <h4 class="modal-title text-center" id="myModalLabel">
+                                    注册
+                                </h4>
+                                <p class="text-danger" id="registerfail"></p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="{% if login_form.errors.username %}errorput{% endif %}">
+                                    <label for="username">用户名</label>
+                                    <input type="text" class="form-control" name='username'
+                                           id="username"
+                                           placeholder="请输入用户名">
+                                </div>
+                                <div class="{% if login_form.errors.username %}errorput{% endif %}">
+
+                                    <label for="password">密码</label>
+                                    <input type="password" class="form-control" name="password"
+                                           id="password"
+                                           placeholder="请输入密码">
+                                </div>
+                                <div class="{% if login_form.errors.username %}errorput{% endif %}">
+
+                                    <label for="password">重复密码</label>
+                                    <input type="password" class="form-control" name="password2"
+                                           id="password2"
+                                           placeholder="重复密码">
+                                </div>
+                                {% csrf_token %}
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <a id='forgetpwd2' class="btn btn-default">忘记密码?</a>
+                                <a class="btn btn-primary" id="jsreigsterBtn">注册</a>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+            </form>
+
+            <div class="col-md-8 column" style="padding-top: 30px;padding-left: 0px;padding-right: 0px;">
+                <ul class="list-unstyled" style="opacity:0.8;
+  filter:alpha(opacity=80); /* IE8 及更早版本 */ background-color:#ffffff;padding-top: 10px;padding-left: 30px;padding-right: 30px">
+                    {% for post in all_posts.object_list %}
+                        <li style="font-weight:bold;color:#000000;">
+                            <h2>
+                                {{ post.name }}
+                            </h2>
+                            <p>
+                                {% if post.content|length >= 50 %}
+                                    {% autoescape off %}
+                                        {{ post.content|truncatechars_html:45 }}
+                                    {% endautoescape %}
+                                {% else %}
+                                    {% autoescape off %}
+                                        {{ post.content }}
+                                    {% endautoescape %}
+                                {% endif %}
+                            </p>
+                            <p class="text-right">
+                                <a class="btn" href="{% url 'post' post.id %}">继续阅读 »</a>
+                            </p>
+                            <hr style="margin-top:-5px;border:1px solid greenyellow;"/>
+                            <p style="padding-bottom: 5px"></p>
+                        </li>
+                    {% endfor %}
+                    <li class="text-center">
+                        <div class="pagination">
+                            {% if all_posts.has_previous %}
+                                <a href="?{{ all_posts.previous_page_number.querystring }}"
+                                   class="prev">&lsaquo;&lsaquo; 上一页</a>
+                            {% else %}
+                                <span class="disabled prev">&lsaquo;&lsaquo; 上一页</span>
+                            {% endif %}
+                            {% for page in all_posts.pages %}
+                                {% if page %}
+                                    {% ifequal page all_posts.number %}
+                                        <span class="current page">{{ page }}</span>
+                                    {% else %}
+                                        <a href="?{{ page.querystring }}" class="page">{{ page }}</a>
+                                    {% endifequal %}
+                                {% else %}
+                                    ...
+                                {% endif %}
+                            {% endfor %}
+                            {% if all_posts.has_next %}
+                                <a href="?{{ all_posts.next_page_number.querystring }}" class="next">下一页 &rsaquo;&rsaquo;</a>
+                            {% else %}
+                                <span class="disabled next">下一页 &rsaquo;&rsaquo;</span>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-2 column" style="padding-left: 0px;padding-top: 20px">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src='https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script>
+    $(window).ready(function () {
+        $('#menutest2').dropdown();
+    });
+    $(function () {
+
+        $("li").click(function () {
+
+            $(this).addClass("active").siblings().removeClass("active");
+
+        })
+    })
+</script>
+<script>
+    $(function () {
+        $('#jsLeftBtn').on('click', function () {
+            var password = $("#password").val();
+            var username = $("#username").val();
+            if (username === "") {
+                $('#loginfail').text('用户名不能为空');
+                return
+            } else if (password === "") {
+                $('#loginfail').text('密码不能为空');
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/login/",
+                data: $('#loginform').serialize(),
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        window.location.href = window.location.href
+                    } else if (data.status === 'fail') {
+                        $('#loginfail').text(data.msg)
+                    }
+                }
+            });
+        });
+    })
+
+</script>
+<script>
+    $(function () {
+        $('#jsreigsterBtn').on('click', function () {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/register/",
+                data: $('#registerform').serialize(),
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        window.location.href = window.location.href
+                        alert(data.msg)
+                    } else if (data.status === 'fail') {
+                        $('#registerfail').text(data.msg)
+                    }
+                }
+            });
+        });
+    })
+
+</script>
+<script>
+    $('#forgetpwd').on('click', function () {
+        alert('哈哈 没有这个功能！')
+    })
+    $('#forgetpwd2').on('click', function () {
+        alert('哈哈 没有这个功能！')
+    })
+</script>
+
+</body>
+</html>
