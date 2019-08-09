@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <section class="container container-page">
+        <div class="pageside">
+            <div class="pagemenus">
+                <ul class="pagemenu">
+                    <li><a href="tags.html">标签云</a></li>
+                    <li><a href="readers.html">读者墙</a></li>
+                    <li><a href="links.html">友情链接</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <header class="article-header">
+                <h1 class="article-title">读者墙</h1>
+            </header>
+            <div class="readers"><a class="item-readers item-readers-1" target="_blank" href="" rel="nofollow">
+                {% for user in all_user %}
+
+                    <h4>{% ifequal forloop.counter 1 %}【金牌读者】{% endifequal %}{% ifequal forloop.counter 2 %}
+                        【银牌读者】{% endifequal %}
+                        {% ifequal forloop.counter 3 %}【铜牌读者】{% endifequal %}{% ifequal forloop.counter 4 %}
+                            【普通读者】{% endifequal %}
+                        <small>评论：{{ user.get_comments }}</small>
+                    </h4>
+                    <img class="avatar" height="36" width="36" src="/static/images/icon/icon.png" alt="">
+                    <strong>{{ user.username }}</strong>随风潜入夜</a>
+                    <a class="item-readers item-readers-2" target="_blank" href="" rel="nofollow">
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
