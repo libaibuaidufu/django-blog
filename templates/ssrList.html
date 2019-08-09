@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ssr列表</title>
+</head>
+<body style="margin: 50px auto;width: 900px">
+<h1 style="text-align: center">ssrlist</h1>
+<button type="button" style="text-align: center" onclick="createSsr()">创建一个</button>
+
+{% for ssr in ssrList %}
+    {% autoescape off %}
+        <p>时间：{{ ssr.create_time }}，文件：<a onclick="downloadfile('{{ ssr.path }}')">{{ MEDIA_URL }}{{ ssr.path }}</a></p>
+        <p>时间：{{ ssr.create_time }}，文件：<a href="{% url "donwssr" ssr.path %}">{{ ssr.path }}</a>
+    {% endautoescape %}
+{% endfor %}
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    console.log(location.host);
+
+    function downloadfile(path) {
+        $.ajax(
+            {
+                cache: false,
+                async: true,
+                url: "/donwssr/",
+                //data:JSON.stringify({"filename":path}),
+                data: {"path": path},
+                type: "post",
+                dataType: "json",
+                //processData:false,
+                //contentType:false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log(data.filePath, "文件下载中... ...");
+                    window.location.href = data.filePath;
+                }
+            }
+        )
+    }
+
+    function createSsr() {
+        console.log("fuck");
+        $.ajax(
+            {
+                cache: false,
+                // async: true,
+                //url:location.host+"/ssrList",
+                url: "/ssrList/",
+                data: {},
+                type: "POST",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log("over..");
+                }
+            }
+        );
+        console.log("good")
+    }
+</script>
+</html>

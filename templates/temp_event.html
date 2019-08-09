@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>keydown、keypress、keyup的区别</title>
+    <style>
+        .area {
+            float: left;
+            display: inline;
+            width: 50%
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!--keydown、keypress、keyup触发的先后顺序-->
+    <span>随意输入一些字符:</span> <input class="keydown-keyup" style="background-color:#00FFFF" type="text"/>
+    <p>当 keydown、keypress 和 keyup 事件相继触发时，输入区域会改变颜色。从而可以看出三个事件触发的先后顺序</p>
+    <p>在 keypress 一直按着不放开，keyup事件不会触发，但该按键状态码会一直被获取，文本框数据会一直添加</p>
+</div>
+
+<div style="margin-top: 100px">
+    <div style="width: 100%">
+        <textarea id="t1" class="area"></textarea>
+        <div id="v1" class="area"></div>
+    </div>
+    <!--按键按下触发keydown事件，t1显示当前按键字符，v1始终能获取到新输入的字符数据。按键不放开当前字符会一直往后添加，同样v1的数据也会一直往后添加-->
+
+    <div style="width: 100%">
+        <textarea id="t2" class="area"></textarea>
+        <div id="v2" class="area"></div>
+    </div>
+    <!--按键按下触发keypress事件，t2显示当前按键字符，v2始终能获取到新输入的字符数据。按键不放开当前字符会一直往后添加，同样v2的数据也会一直往后添加-->
+
+    <div style="width: 100%">
+        <textarea id="t3" class="area"></textarea>
+        <div id="v3" class="area"></div>
+    </div>
+    <!--按键按下触发keyup事件，t2显示当前按键字符，按键不放开则当前字符会一直往后添加，但v2并不能获取到新输入的字符数据-->
+    <div style="clear: both"></div>
+
+    <!--这里分别给三个textarea标签绑定三种事件，其中t1，t2均不能实时将数据同步到v1，v2中(总是缺少当前正在输入的字符)，keydown、keypress因为是按下按键就触发，所以按下按键时当前输入字符并未返回，因而不能实时同步。
+    而keyup则不一样，keyup必须等到按键松开才能触发，才能将数据同步，当然如果我一直按着按键(一直处于keydown、keypress阶段)，虽然textarea数据一直在往后添加，但是下面div的数据却无法同步，必须要按键松开才能同步。
+    这样就说明了这三种事件触发之间的区别，keydown是在按下时触发，虽然返回键盘的代码，但还没得到最后的输入结果；keypress也是一样，虽然得到了ASCII字符，但还没得到需要的字符；keyup才能得到最后的完整数据。
+    因而keyup适用于文本框的数据输入和同步，keydown 与 keypress更适用于通过键盘控制页面功能的实现(如回车事件)。所以可以根据不同的需求，适当的选择!-->
+
+</div>
+
+<div style="margin-top: 100px">
+    <!--在看了三者之间的细小差别后，再来看下keydown、keypress之间的区别-->
+    <div>
+        <span>随意输入一些字符:</span><input class="keydown" type="text"/>
+        <p>这里显示keydown事件返回的数据:</p><span id="keydown"></span>
+    </div>
+    <div>
+        <span>随意输入一些字符:</span><input class="keypress" type="text"/>
+        <p>这里显示keypress事件返回的数据:</p><span id="keypress"></span>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".keydown-keyup").keydown(function () {
+            console.log("keydown正在执行!");
+            $(".keydown-keyup").css("background-color", "#FF0000");
+        });
+        $(".keydown-keyup").keypress(function () {
+            console.log("keypress正在执行!");
+            $(".keydown-keyup").css("background-color", "#FFA500");
+        });
+        $(".keydown-keyup").keyup(function () {
+            console.log("keyup正在执行!");
+            $(".keydown-keyup").css("background-color", "#4B0082");
+        });
+
+        $('#t1').on('keydown', function () {
+            $('#v1').text($(this).val());
+        });
+        $('#t2').on('keypress', function () {
+            $('#v2').text($(this).val());
+        });
+        $('#t3').on('keyup', function () {
+            $('#v3').text($(this).val());
+        });
+
+
+        $(".keydown").keydown(function (event) {
+            console.log(event);
+            var key = window.event ? window.event.keyCode : event.which;
+            if (window.event) { //ie
+                $("#keydown").html("Key: " + key);
+                window.event.returnValue = false;
+            } else {    //非IE
+                $("#keydown").html("Key: " + key);
+                return false;
+            }
+        });
+        $(".keypress").keypress(function (event) {
+            console.log(event);
+            var key = window.event ? window.event.keyCode : event.which;
+            if (window.event) { //ie
+                $("#keypress").html("Key: " + key);
+                window.event.returnValue = false;
+            } else {    //非IE
+                $("#keypress").html("Key: " + key);
+                return false;
+            }
+        });
+        /**通过对event事件对象的对比，发现keydown和keypress两个事件返回的事件对象基本相同，但有一个很细微的却很重要的区别：charCode值不一样
+         * keydown 事件对象的charCode值始终为：0
+         * keypress 事件对象的charCode值却跟keyCode值一样(当前按键字符的ASCII字符)。
+         * 所以：charCode 返回的是 onkeypress 事件触发键值的字符代码(ASCII字符代码，就是ASCII码，一一对应)。而 keyCode 返回的是 onkeydown onkeypress 以及 onkeyup 事件的键的代码(还是ASCII码)。
+         * 整个系统都是采用ASCII码表(ASCII字符和ASCII码一一对应，比如键盘"p"键，对应ASCII字符码:"p"，对应ASCII码:112)
+         */
+    });
+</script>
+</body>
+</html>
+<div style="display: block;width: 100%">
+    {% for comment in post.get_comment_all %}
+        <div class="float_left" style="width: 10%">
+            <img src="{% static 'th.jpg' %}" alt="" width="50px" height="50px">
+        </div>
+        <div class="float_left" style="width: 90%">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ comment.nick_name }}</div>
+                <div class="panel-body">
+                    {{ comment.content }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
