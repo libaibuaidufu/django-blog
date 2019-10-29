@@ -8,17 +8,35 @@
 from datetime import datetime
 
 import markdown
-# from DjangoUeditor.models import UEditorField
-from ckeditor.fields import RichTextField
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from ckeditor_uploader.fields import RichTextUploadingField
-from users.models import UserProfile
-from mdeditor.fields import MDTextField
+
+
+# from DjangoUeditor.models import UEditorField
+# from ckeditor.fields import RichTextField
+# from ckeditor_uploader.fields import RichTextUploadingField
+# from users.models import UserProfile
+# from mdeditor.fields import MDTextField
+
+class UserProfile(AbstractUser):
+    class Meta:
+        verbose_name = u'用户'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.username
 
 
 class BlogCategory(models.Model):
-    cate_pid = models.IntegerField(blank=True, null=True)
+    CATEGORY_TYPE = (
+        (1, "一级类目"),
+        (2, "二级类目"),
+        (3, "三级类目"),
+    )
     cate_name = models.CharField(max_length=30, blank=True, null=True)
+    category_type = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="类目级别", help_text='类目级别')
+    parent_category = models.ForeignKey('self', null=True, blank=True, verbose_name='父类目级',
+                                        related_name="sub_cat", on_delete="models.CASCADE")
     create_time = models.DateTimeField(blank=True, null=True)
     create_person = models.CharField(max_length=30, blank=True, null=True)
 
@@ -36,17 +54,6 @@ class BlogCategory(models.Model):
         return self.blogpost_set.all()
 
 
-class BlogCollection(models.Model):
-    post_id = models.CharField(max_length=255, blank=True, null=True)
-    user_id = models.IntegerField(blank=True, null=True)
-    create_time = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        # db_table = 'blog_collection'
-        verbose_name = u"收藏"
-        verbose_name_plural = verbose_name
-
-
 class BlogTag(models.Model):
     tag_name = models.CharField(max_length=30, blank=True, null=True)
     create_time = models.DateTimeField(blank=True, null=True)
@@ -57,21 +64,21 @@ class BlogTag(models.Model):
         verbose_name = u"标签"
         verbose_name_plural = verbose_name
 
-
     def __str__(self):
         return self.tag_name
 
 
 class BlogPost(models.Model):
-    category = models.ForeignKey(BlogCategory, verbose_name="类别", on_delete=models.DO_NOTHING)
-    tag = models.ManyToManyField(BlogTag, verbose_name="标签", null=True, blank=True, related_name='tags')
+    category = models.ForeignKey(BlogCategory, verbose_name="类别", related_name="posts", on_delete=models.DO_NOTHING)
+    tag = models.ManyToManyField(BlogTag, verbose_name="标签", related_name='tags')
     name = models.CharField(max_length=50, verbose_name='文章名')
     author = models.ForeignKey(UserProfile, verbose_name="作者", on_delete=models.DO_NOTHING)
+    content = models.TextField()
     # content = UEditorField(verbose_name='文章内容', width=600, height=300, imagePath="post/ueditor/",
     #                        filePath="post/ueditor/",
     #                        default='')
     # content = RichTextUploadingField()
-    content = MDTextField()
+    # content = MDTextField()
     is_hot = models.BooleanField(default=False)
     is_new = models.BooleanField(default=False)
     click_nums = models.IntegerField(default=0, null=True, blank=True)
@@ -105,9 +112,12 @@ class BlogComment(models.Model):
     post = models.ForeignKey(BlogPost, verbose_name="文章", on_delete=models.DO_NOTHING)
     nick_name = models.CharField(max_length=30, verbose_name="留言用户名", default="admin")
     email = models.EmailField(max_length=30, verbose_name="邮箱", default="admin@admin.com")
-    content = MDTextField(blank=True, null=True)  # models.CharField(max_length=255, blank=True, null=True)
+    content = models.CharField(max_length=255, blank=True, null=True)  # MDTextField(blank=True, null=True)  #
+    is_delete = models.BooleanField(default=1, null=False, blank=False)
     create_time = models.DateTimeField(blank=True, null=True, default=datetime.now)
     create_person = models.CharField(max_length=255, blank=True, null=True)
+    parent_comment = models.ForeignKey('self', null=True, blank=True, verbose_name='父类目级',
+                                       related_name="sub_comment", on_delete="models.CASCADE")
 
     class Meta:
         # db_table = 'blog_comment'
@@ -118,10 +128,12 @@ class BlogComment(models.Model):
         return self.content
 
 
-class SsrModel(models.Model):
-    path = models.CharField(max_length=255, verbose_name="名称")
-    create_time = models.DateTimeField(default=datetime.utcnow)
+class BlogCollection(models.Model):
+    post = models.ForeignKey(BlogPost, verbose_name="文章", on_delete=models.DO_NOTHING,null=True)
+    user = models.ForeignKey(UserProfile, verbose_name="作者", on_delete=models.DO_NOTHING,null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        verbose_name = "酸酸乳"
+        # db_table = 'blog_collection'
+        verbose_name = u"收藏"
         verbose_name_plural = verbose_name

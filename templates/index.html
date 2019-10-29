@@ -1,73 +1,10 @@
-{% extends "base.html" %}
-{% block style %}
-    <style>
-        .list_box {
-            float: left;
-            margin-top: 20px;
-            text-align: center;
-            height: auto;
-        }
-
-        .f_tab {
-            border-color: #ddd;
-            border-width: 1px;
-            border-radius: 5%;
-            border-style: solid;
-            width: 268px;
-            float: left;
-            min-height: 192px;
-            padding: 5px;
-        }
-
-        .f_tab_mar {
-            margin-left: 75px;
-        }
-
-        .f_footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 60px; /*脚部的高度*/
-            /*background: #6cf;*/
-            clear: both;
-        }
-    </style>
-{% endblock %}
-{% block content %}
-    <div class="text-center">
-        <h1>随风潜入夜</h1>
-    </div>
-    <div class="list_box">
-        <div class="f_tab">
-            <div class="list-group">
-                <a href="#" class="list-group-item disabled" style="border: none">
-                    分类
-                </a>
-                {% for category in categoryList %}
-                    <a href="{% url "category" category.id %}" class="list-group-item"
-                       style="border: none">{{ category.cate_name }} ({{ category.get_post_num }})</a>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="f_tab f_tab_mar">
-            <div class="list-group">
-                <a href="#" class="list-group-item disabled" style="border: none">
-                    热门
-                </a>
-                {% for post in postHotList %}
-                    <a href="{% url "post" post.id %}" class="list-group-item" style="border: none">{{ post.name }}</a>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="f_tab f_tab_mar">
-            <div class="list-group">
-                <a href="#" class="list-group-item disabled" style="border: none">
-                    最新
-                </a>
-                {% for post in postList %}
-                    <a href="{% url "post" post.id %}" class="list-group-item" style="border: none">{{ post.name }}</a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="{% url "social:begin" "weibo" %}">微博登录</a>
+</body>
+</html>
