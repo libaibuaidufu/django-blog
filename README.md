@@ -22,6 +22,9 @@ python manage.py collectstatic
 其中 tempmodel中的页面本来是准备做前后端分离的 后台发现不适合就弃用了
 如果样式不对，可以设置debug=False
 
+es 生成索引 `python manage.py search_index`
+haystack 生成索引 `python manage.py rebuild_index`
+
 ### windows use 问题
 ```python
     from django.utils.encoding import force_text, python_2_unicode_compatible

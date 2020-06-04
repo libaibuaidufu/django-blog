@@ -159,6 +159,7 @@ HAYSTACK_CONNECTIONS = {
 # 自动更新 索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+# 配置es
 ELASTICSEARCH_DSL = {
     'default': {
         'hosts': '192.168.5.54:9200'
