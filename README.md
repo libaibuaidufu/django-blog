@@ -20,9 +20,11 @@ python manage.py collectstatic
 页面模板 使用了cdn ，避免带宽小的服务器请求页面卡，因此用cdn，可以大大加速页面。
 如果你的带宽比较大，可以在templates中 修改base.html 和 users/users_form_base.html
 其中 tempmodel中的页面本来是准备做前后端分离的 后台发现不适合就弃用了
+
 如果样式不对，可以设置debug=False
 
 es 生成索引 `python manage.py search_index`
+
 haystack 生成索引 `python manage.py rebuild_index`
 
 ### windows use 问题
