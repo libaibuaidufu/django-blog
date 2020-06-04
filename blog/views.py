@@ -37,7 +37,7 @@ class ArticleIndexView(ArticleListView):
     queryset = Article.objects.filter(status='p')
     template_name = "index.html"
     context_object_name = "article_list"
-    paginate_by = 4
+    paginate_by = 5
     page_kwarg = 'page'
 
     # 自定义
