@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .blog-article-info {
+            padding: 1.25rem 0rem;
+        }
+
+        .blog-article-info>.blog-post-title>p {
+            color: #444;
+        }
+
+        .reset-breadcrumb {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            padding: .75rem 0rem;
+            margin-bottom: 1rem;
+            list-style: none;
+            /* background-color: #e9ecef; */
+            border-radius: .25rem;
+        }
+
+        .breadcrumb-item>a {
+            color: #21759b;
+
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: ">";
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blog-article-info">
+        <nav aria-label="reset-breadcrumb">
+            <ol class="reset-breadcrumb ">
+                <li class="breadcrumb-item"><a href="#">随风潜入夜</a></li>
+                <li class="breadcrumb-item"><a href="#">Python</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cras justo odio</li>
+            </ol>
+        </nav>
+        <div class="blog-post-title text-center">
+            <p class="h4">Cras justo odio</p>
+        </div>
+        <div class="blog-post-views clearfix">
+            <div class="float-left"><small>发布时间：2020-5-20</small></div>
+            <div class="float-left"><small>作者：admin</small></div>
+            <div class="float-right"><small>250 views</small></div>
+        </div>
+
+        <div class="blog-post-content">
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var converter = new showdown.Converter(),
+            text = `# hello,world!`,
+            html = converter.makeHtml(text);
+            console.log(html)
+            $(".blog-post-content").append(html)
+        })
+    </script>
+</body>
+
+</html>

@@ -1,42 +1,25 @@
-"""blog URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.conf.urls import url
-from django.conf import settings
-from django.conf.urls.static import static
-from home.views import IndexView, SsrListView, DownLoadView, CategoryView, PostView, CommentView
-from users.views import LoginView, RegisterView, LogoutView
-from django.views.static import serve  # 需要导入
+@Time    : 2020/5/28 16:21
+@File    : urls.py
+@author  : dfkai
+@Software: PyCharm
+"""
+from django.urls import path
 
+from .views import ArticleIndexView, ArticleDetailView, CategoryArticleView, TagArticleView, CommentPostView, \
+    AuthorDetailView, ESSearchView
+
+app_name = "blog"
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('mdeditor/', include('mdeditor.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('', IndexView.as_view(), name="index"),
-    path('category/<int:category_id>', CategoryView.as_view(), name="category"),
-    path('post/<int:post_id>', PostView.as_view(), name="post"),
-    path('post/', PostView.as_view(), name="posts"),
-    path('comment/', CommentView.as_view(), name="comment"),
-    path('ssrList', SsrListView.as_view(), name="ssrList"),
-    path('donwssr/<str:path>', DownLoadView.as_view(), name="donwssr"),
-    path('login/', LoginView.as_view(), name="login"),
-    path('register/', RegisterView.as_view(), name="register"),
-    path('logout/', LogoutView.as_view(), name="logout"),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),  # 这部分很重要
+    path(r'', ArticleIndexView.as_view(), name="index"),
+    path(r'article/<int:year>/<int:month>/<int:day>/<int:article_id>.html', ArticleDetailView.as_view(),
+         name="detailbyid"),
+    path(r'category/<slug:category_name>.html', CategoryArticleView.as_view(), name="categorybyslug"),
+    path(r'tag/<slug:tag_name>.html', TagArticleView.as_view(), name="tagbyslug"),
+    path('article/<int:article_id>/postcomment', CommentPostView.as_view(), name='postcomment'),
+    path(r'author/<author_name>.html', AuthorDetailView.as_view(), name='author_detail'),
+    path(r'author/<author_name>/<int:page>.html', AuthorDetailView.as_view(), name='author_detail_page'),
+    path(r'es_search/', ESSearchView.as_view(), name='es_search'),
 ]
-
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

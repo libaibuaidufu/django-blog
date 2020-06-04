@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<ul class="list-group">
+    {% for article in article_list %}
+        <li class="list-group-item">
+            <div class="blog-post-title">
+                <p class="h4"><a href="/article_detail.html">article.title</a></p>
+            </div>
+            <div class="blog-post-views clearfix">
+                <div class="float-left">
+                    <small>发布时间：article.pub_time</small>
+                </div>
+                <div class="float-left">
+                    <small>作者：article.author.username</small>
+                </div>
+                <div class="float-right">
+                    <small>article.views views</small>
+                </div>
+            </div>
+            <div class="blog-post-content">
+
+            </div>
+        </li>
+    {% endfor %}
+    <li class="list-group-item">
+        <div class="blog-post-title">
+            <p class="h4"><a href="">Dapibus ac facilisis in</a></p>
+        </div>
+        <div class="blog-post-views clearfix">
+            <div class="float-left">
+                <small>发布时间：2020-5-20</small>
+            </div>
+            <div class="float-right">
+                <small>250 观看</small>
+            </div>
+        </div>
+        <div class="blog-post-content">
+
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="blog-post-title">
+            <p class="h4"><a href="">Morbi leo risus</a></p>
+        </div>
+        <div class="blog-post-views clearfix">
+            <div class="float-left">
+                <small>发布时间：2020-5-20</small>
+            </div>
+            <div class="float-right">
+                <small>250 观看</small>
+            </div>
+        </div>
+        <div class="blog-post-content">
+
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="blog-post-title">
+            <p class="h4"><a href="">Porta ac consectetur ac</a></p>
+        </div>
+        <div class="blog-post-views clearfix">
+            <div class="float-left">
+                <small>发布时间：2020-5-20</small>
+            </div>
+            <div class="float-right">
+                <small>250 观看</small>
+            </div>
+        </div>
+        <div class="blog-post-content">
+
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="blog-post-title">
+            <p class="h4"><a href="">Vestibulum at eros</a></p>
+        </div>
+        <div class="blog-post-views clearfix">
+            <div class="float-left">
+                <small>发布时间：2020-5-20</small>
+            </div>
+            <div class="float-right">
+                <small>250 观看</small>
+            </div>
+        </div>
+        <div class="blog-post-content">
+
+        </div>
+    </li>
+
+</ul>
+
+
+</body>
+
+</html>

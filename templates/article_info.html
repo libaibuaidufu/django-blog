@@ -1,0 +1,33 @@
+{% load blog_tags %}
+<div class="blog-article-info">
+    <nav aria-label="reset-breadcrumb">
+        <ol class="reset-breadcrumb ">
+            <li class="breadcrumb-item"><a href="/">随风潜入夜</a></li>
+            {% for category in category_list %}
+                <li class="breadcrumb-item"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+            {% endfor %}
+            <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+        </ol>
+    </nav>
+    <div class="blog-post-title text-center">
+        <p class="h4">{{ article.title }}</p>
+    </div>
+    <div class="blog-post-views clearfix">
+        <div class="float-left">
+            <small>发布时间：{{ article.pub_time }}</small>
+        </div>
+        <div class="float-left">
+            <small>作者：{{ article.author.username }}</small>
+        </div>
+        <div class="float-right">
+            <small>{{ article.views }} views</small>
+        </div>
+    </div>
+
+    <div class="blog-post-content">
+        {{ article.body|custom_markdown }}
+    </div>
+    {% include "article_info_footer.html" %}
+
+</div>
+

@@ -1,0 +1,39 @@
+{% if page_type and tag_name %}
+    <header class="blog-article-category">
+        <p class="archive-title">{{ page_type }}：<span>{{ tag_name }}</span></p>
+    </header><!-- .archive-header -->
+{% endif %}
+
+<ul class="list-group">
+    {% for article in article_list %}
+        <li class="list-group-item">
+            <div class="blog-post-title">
+                <p class="h4"><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></p>
+            </div>
+            <div class="blog-post-views clearfix">
+                <div class="float-left">
+                    <small>发布时间：{{ article.pub_time }}</small>
+                </div>
+                <div class="float-left">
+                    <small>作者：{{ article.author.username }}</small>
+                </div>
+                <div class="float-right">
+                    <small>{{ article.views }} views</small>
+                </div>
+            </div>
+            <div class="blog-post-content">
+
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+<nav aria-label="Page navigation " class="blog-page">
+    <ul class="pagination d-flex justify-content-between">
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">较早文章</a></li>
+        {% endif %}
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">较新文章</a></li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,27 +1,27 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
 
 class UserProfile(AbstractUser):
-    # user_name = models.CharField(max_length=20, blank=True, null=True)
-    nick_name = models.CharField(max_length=20, blank=True, null=True)
-    # password = models.CharField(max_length=30, blank=True, null=True)
-    avatar = models.CharField(max_length=255, blank=True, null=True)
-    birthdate = models.DateTimeField(blank=True, null=True)
-    gender = models.CharField(max_length=6, blank=True, null=True)
-    # email = models.CharField(max_length=40, blank=True, null=True)
-    phone = models.CharField(max_length=11, blank=True, null=True)
-    reg_ip = models.CharField(max_length=255, blank=True, null=True)
-    reg_time = models.DateTimeField(blank=True, null=True)
-    update_time = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        verbose_name = u'用户'
-        verbose_name_plural = verbose_name
+    nickname = models.CharField('昵称', max_length=100, blank=True)
+    created_time = models.DateTimeField('创建时间', auto_now_add=True)
+    last_mod_time = models.DateTimeField('修改时间', auto_now=True)
+    source = models.CharField("创建来源", max_length=100, blank=True)
 
     def __str__(self):
-        return self.username
+        return self.email
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = "用户"
+        verbose_name_plural = verbose_name
+        get_latest_by = 'id'
+
+    def get_absolute_url(self):
+        return reverse(
+            'blog:author_detail', kwargs={
+                'author_name': self.username})

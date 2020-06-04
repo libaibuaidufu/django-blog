@@ -1,0 +1,39 @@
+<div class="blog-aside">
+    <aside>
+        <form class="form-inline " action="{% url "blog:es_search" %}" method="get" style="margin-bottom: 15px">
+            <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
+                   style="width: 70%" placeholder="es 搜索">
+            <button class="btn btn btn-outline-secondary btn-sm " type="submit" style="width: 22%">搜索</button>
+        </form>
+        <form class="form-inline " action="{% url "haystack_search" %}" method="get">
+            <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
+                   style="width: 70%" placeholder="haystack-whoosh 搜索">
+            <button class="btn btn btn-outline-secondary btn-sm " type="submit" style="width: 22%">搜索</button>
+        </form>
+    </aside>
+    <aside>
+        <h6>公告</h6>
+        <div class="blog-aside-content">
+            <p>由于最近迁移至阿里云主机，因此Facebook，Google登录不可用，望见谅。 大家如果想测试本站功能,请移步 测试 来测试.谢谢.</p>
+        </div>
+    </aside>
+    <aside>
+        <h6>功能</h6>
+        <div class="blog-aside-content">
+            <ul class="blog-tools">
+                {% if request.user.is_authenticated %}
+                    <li>{{ request.user.username }}</li>
+                    {% if request.user.is_staff %}
+                        <li><a href="/admin/">管理面板</a></li>
+                    {% endif %}
+                    <li><a href="{% url "users:logout" %}">登出</a></li>
+                {% else %}
+                    <li><a href="{% url "users:login" %}">登录</a></li>
+                    <li><a href="{% url "users:register" %}">注册</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </aside>
+</div>
+

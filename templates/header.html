@@ -1,0 +1,40 @@
+{% load blog_tags %}
+{% query_category parent_category=None as nav_category %}
+<div class="blog-head">
+    <p class="h3">随风潜入夜</p>
+    <p class="h6 ">至理名言</p>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" href="/">随风潜入夜</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" href="/">首页</a>
+            </li>
+            {% for category in nav_category %}
+                {% if category.get_sub_categorys|length > 1 %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">{{ category.name }}</a>
+                        <div class="dropdown-menu">
+                            {% for sub_category in category.get_sub_categorys %}
+                                {% if category.name != sub_category.name %}
+                                    <a class="dropdown-item"
+                                       href="{{ sub_category.get_absolute_url }}">{{ sub_category.name }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

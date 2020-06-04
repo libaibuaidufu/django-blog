@@ -1,0 +1,399 @@
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    width: 100vw;
+    overflow: hidden;
+    padding-left: calc((100vw - 100%) / 2);
+    padding-right: calc((100vw - 100%) / 2);
+    background-color: #fff;
+}
+
+
+/* // Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap */
+.container {
+    background-color: #fff;
+    border: 2px #fff solid;
+    height: 100%;
+    height: auto !important;
+    padding: 1.25rem;
+}
+
+a {
+    outline: none;
+}
+
+nav.navbar {
+    border-top: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid rgb(230, 230, 230);
+    padding: 0.5rem 0rem;
+}
+
+li.nav-item > a.nav-link {
+    color: #5e5e5e;
+}
+
+/* ul.list-group {
+  padding: 0rem 1.25rem;
+} */
+li.list-group-item {
+    border: none;
+    /* border-bottom: 4px double rgba(0,0,0,.125); */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.75rem 0rem;
+}
+
+div.blog-post-title {
+    margin-bottom: 1.5rem;
+}
+
+div.blog-post-title > p > a {
+    color: #21759b;
+}
+
+div.blog-post-title > p > a:hover {
+    color: #5e5e5e;
+    text-decoration: none;
+}
+
+.blog-content-left {
+    width: 100%;
+}
+
+.blog-content-right {
+    width: 100%;
+}
+
+.navbar-brand {
+    display: block;
+}
+
+.blog-login-register {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.blog-users-body {
+    background-image: url("https://w.wallhaven.cc/full/ey/wallhaven-eymzjk.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+}
+
+@media (max-width: 575px) {
+    .blog-users-body {
+        background-image: none;
+    }
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .container {
+        max-width: 768px;
+    }
+
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 992px;
+    }
+
+    .blog-login-register {
+        margin-bottom: 200px;
+    }
+
+    .blog-content-left {
+        width: 75%;
+        padding-right: 5%;
+    }
+
+    .blog-content-right {
+        width: 25%;
+    }
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+    body {
+        background-color: rgb(230, 230, 230);
+    }
+
+    .container {
+        margin-top: 50px;
+        padding: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    .blog-login-register {
+        margin-bottom: 200px;
+    }
+
+    .blog-content-left {
+        width: 75%;
+        padding-right: 5%;
+    }
+
+    .blog-content-right {
+        width: 25%;
+    }
+
+    .navbar-brand {
+        display: none;
+    }
+}
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+    body {
+        background-color: rgb(230, 230, 230);
+    }
+
+    .container {
+        margin-top: 50px;
+        padding: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    .blog-login-register {
+        margin-bottom: 200px;
+    }
+
+    .blog-content-left {
+        width: 75%;
+        padding-right: 5%;
+    }
+
+    .blog-content-right {
+        width: 25%;
+    }
+
+    .navbar-brand {
+        display: none;
+    }
+}
+
+.blog-content {
+    padding-top: 20px;
+}
+
+.blog-post-views {
+    color: #757575;
+}
+
+.blog-post-views > div.float-left {
+    padding-right: 10px;
+}
+
+.blog-footer {
+    padding-top: 20px;
+}
+
+.footer {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+#blog-footer {
+    width: 100%;
+}
+
+.blog-page {
+    margin-top: 2.5rem;
+}
+
+.blog-page > ul > li > a {
+    color: #21759b;
+}
+
+.blog-head {
+    padding-bottom: 1.25rem;
+}
+
+.blog-head > p.h6 {
+    color: #757575;
+}
+
+.blog-aside {
+    padding-top: 1.25rem;
+}
+
+aside {
+    margin-bottom: 3.428571429rem;
+
+}
+
+aside > h6 {
+    margin-bottom: 1.5rem;
+    font-size: 0.785714286rem;
+    line-height: 2.181818182;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #636363;
+}
+
+.blog-aside-content {
+    font-size: 0.928571429rem;
+    line-height: 1.846153846rem;
+}
+
+.blog-article-info {
+    padding: 1.25rem 0rem;
+}
+
+.blog-article-info > .blog-post-title > p {
+    color: #444;
+}
+
+.reset-breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: .75rem 0rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    /* background-color: #e9ecef; */
+    border-radius: .25rem;
+}
+
+/*文章详情*/
+.breadcrumb-item > a {
+    color: #21759b;
+
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+
+.blog-article-comment-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 100%;
+}
+
+.blog-comment-reply-user > span {
+    margin-right: 5px;
+}
+
+div.blog-comment-reply {
+    margin-top: 10px;
+}
+
+div.blog-comment-reply > a {
+    color: #aaa;
+    font-size: 0.928571429rem;
+}
+
+.blog-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* 分割线 */
+ul.blog-parent-ul > li.media {
+    padding: 0.75rem 0rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+li.media {
+    padding: 0.75rem 0rem;
+}
+
+li.media > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.media-body > h6 {
+    font-weight: 400;
+
+}
+
+.media-body > h6 > span {
+    margin-right: 5px;
+
+}
+
+p.blog-comment-reply2 {
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+}
+
+p.blog-comment-reply2 > a {
+    color: #aaa;
+    font-size: 0.928571429rem;
+}
+
+/*首页*/
+.blog-article-category {
+    padding-top: 1.25rem;
+    margin-bottom: 3rem;
+}
+
+/*文章详情 footer*/
+footer.blog-entry-meta {
+    margin-top: 24px;
+    margin-top: 1.714285714rem;
+    font-size: 13px;
+    font-size: 0.928571429rem;
+    line-height: 1.846153846;
+    color: #757575;
+}
+
+footer.blog-entry-meta a {
+    color: #757575;
+    text-decoration: underline;
+}
+
+/*文章评论*/
+.blog-comment-reply-title {
+    font-size: 16px;
+    font-size: 1.142857143rem;
+    line-height: 1.5;
+}
+
+.comment-form {
+    padding: 10px 20px 20px;
+    border-radius: 4px;
+    background-color: #e5e5e5;
+}
+
+.comment-form-comment > label {
+    display: block;
+}
+
+#commentform textarea {
+    height: 100px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: inherit;
+    padding: 6px;
+    padding: 0.428571429rem;
+}
+
+/*侧栏*/
+ul.blog-tools > li > a {
+    color: #9f9f9f;
+}
+
+/*登录*/
+.blog-login-form {
+    width: 250px;
+}
+
+/*分页*/
+.blog-page {
+    margin-top: 2.5rem;
+}

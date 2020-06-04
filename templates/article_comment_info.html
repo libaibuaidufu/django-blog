@@ -1,0 +1,19 @@
+{% load blog_tags %}
+
+<li class="media">
+    <img src="{% gravatar_url comment_item.author.email 50 %}" class="mr-3" alt="{{ comment_item.author.username }}">
+    <div class="media-body" id="div-comment-{{ comment_item.pk }}">
+        <h6 class="mt-0 mb-1"><span><a
+                href="">{{ comment_item.author.username }}</a></span><span>{{ comment_item.last_mod_time }}</span></h6>
+        {{ comment_item.body }}
+        <p class="blog-comment-reply2"><a href="javascript:void(0)" onclick="do_reply({{ comment_item.pk }})">回复</a></p>
+        <ul>
+            {% query article_comments parent_comment=comment_item as cc_comments %}
+            {% for cc in cc_comments %}
+                {% with comment_item=cc template_name="article_comment_info.html" %}
+                    {% include template_name %}
+                {% endwith %}
+            {% endfor %}
+        </ul>
+    </div>
+</li>

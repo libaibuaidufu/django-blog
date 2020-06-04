@@ -1,0 +1,12 @@
+{% load blog_tags %}
+<div class="blog-comment-count">
+    <p>评论：{{ comment_count }}</p>
+</div>
+<ul class="list-unstyled blog-parent-ul">
+    {% query article_comments parent_comment=None as parent_comments %}
+    {% for comment_item in parent_comments %}
+        {% include "article_comment_info.html" %}
+    {% endfor %}
+
+</ul>
+

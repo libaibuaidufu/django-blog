@@ -1,0 +1,39 @@
+{% extends "blog_base.html" %}
+{% load static %}
+{% block content %}
+    {% include "article_info.html" %}
+    {% if article.comment_status == "o" %}
+        {% include "article_comments.html" %}
+        {% if user.is_authenticated %}
+            {% include 'article_post_comment.html' %}
+        {% else %}
+            <div class="comments-area">
+                <h6 class="comment-meta">您还没有登录，请您<a
+                        href="{% url "users:login" %}" rel="nofollow">登录</a>后发表评论。
+                </h6>
+                {#                {% load oauth_tags %}#}
+                {#                {% load_oauth_applications request %}#}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        function do_reply(parentid) {
+            console.log(parentid);
+            $("#id_parent_comment_id").val(parentid)
+            $("#commentform").appendTo($("#div-comment-" + parentid));
+            $("#reply-title").hide();
+            $("#cancel_comment").show();
+        }
+
+        function cancel_reply() {
+            $("#reply-title").show();
+            $("#cancel_comment").hide();
+            $("#id_parent_comment_id").val('')
+            $("#commentform").appendTo($("#respond"));
+        }
+
+    </script>
+{% endblock %}
