@@ -1,5 +1,5 @@
 # blog-co
-本文 学习、借鉴了 [DjangoBlog]!(https://github.com/liangliangyy/DjangoBlog).
+本文 学习、借鉴了 [DjangoBlog](https://github.com/liangliangyy/DjangoBlog).
 
 ## 主要区别
 使用bootstrap4 写的前端样式
@@ -44,3 +44,7 @@ from django.utils.encoding import force_text
 from six import python_2_unicode_compatible
 
 ```
+
+### 预览
+ ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_one.png)
+ ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_two.png)
