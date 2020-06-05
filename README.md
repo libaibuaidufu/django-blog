@@ -8,6 +8,8 @@
 
 ## 配置
 ```
+pip  install -r requirements.txt
+
 配置 email
 # 数据库生成
 python manage.py makemigrations
