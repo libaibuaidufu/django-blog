@@ -45,6 +45,9 @@ from six import python_2_unicode_compatible
 
 ```
 
+加入了 django-suit==2.0a1 美化后台页面，但是此版本尚未发布，因此安装
+`pip install https://github.com/darklow/django-suit/tarball/v2`
+
 ### 预览
  ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_one.png)
  ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_two.png)
