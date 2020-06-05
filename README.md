@@ -27,7 +27,7 @@ es 生成索引 `python manage.py search_index`
 
 haystack 生成索引 `python manage.py rebuild_index`
 
-### windows use 问题
+### 使用中的 问题
 ```python
     from django.utils.encoding import force_text, python_2_unicode_compatible
 ImportError: cannot import name 'python_2_unicode_compatible' from 'django.utils.encoding' (C:\Envs\blog_co\lib\site-packages\django\utils\encoding.py)
