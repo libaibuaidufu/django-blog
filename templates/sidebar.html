@@ -1,10 +1,12 @@
 <div class="blog-aside">
     <aside>
-        <form class="form-inline " action="{% url "blog:es_search" %}" method="get" style="margin-bottom: 15px">
-            <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
-                   style="width: 70%" placeholder="es 搜索">
-            <button class="btn btn btn-outline-secondary btn-sm " type="submit" style="width: 22%">搜索</button>
-        </form>
+        {% if  settings.USE_ELASTICSEARCH %}
+            <form class="form-inline " action="{% url "blog:es_search" %}" method="get" style="margin-bottom: 15px">
+                <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
+                       style="width: 70%" placeholder="es 搜索">
+                <button class="btn btn btn-outline-secondary btn-sm " type="submit" style="width: 22%">搜索</button>
+            </form>
+        {% endif %}
         <form class="form-inline " action="{% url "haystack_search" %}" method="get">
             <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
                    style="width: 70%" placeholder="haystack-whoosh 搜索">

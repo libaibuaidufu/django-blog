@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=m(2p&*yd--(1-36h_p+tk((2ob9epu7f&g8gl4s2m*d=n67j%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
-    "django_elasticsearch_dsl",
+    # "django_elasticsearch_dsl",
     'mdeditor',
     'users',
     'blog',
@@ -162,6 +162,7 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # 配置es
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': '192.168.5.54:9200'
+        'hosts': '127.0.0.1:9200'
     },
 }
+USE_ELASTICSEARCH = False

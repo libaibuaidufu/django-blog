@@ -21,5 +21,5 @@ urlpatterns = [
     path('article/<int:article_id>/postcomment', CommentPostView.as_view(), name='postcomment'),
     path(r'author/<author_name>.html', AuthorDetailView.as_view(), name='author_detail'),
     path(r'author/<author_name>/<int:page>.html', AuthorDetailView.as_view(), name='author_detail_page'),
-    path(r'es_search/', ESSearchView.as_view(), name='es_search'),
+    # path(r'es_search/', ESSearchView.as_view(), name='es_search'),
 ]
