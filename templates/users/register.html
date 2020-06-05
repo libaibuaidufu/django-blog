@@ -6,7 +6,11 @@
     <h5 class="text-center">注册</h5>
     <form action="{% url 'users:register' %}" method="post" class="blog-login-form m-auto">
         {% csrf_token %}
-        {{ form.non_field_errors }}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}gi
         {% for field in form %}
             <div class="form-group">
                 {{ field }}

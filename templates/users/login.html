@@ -6,11 +6,10 @@
     <h5 class="text-center">登录</h5>
     <form action="{% url 'users:login' %}" method="post" class="blog-login-form m-auto">
         {% csrf_token %}
-        <div class="alert alert-danger" role="alert">
-            {{ form.non_field_errors }}
-        </div>
-        {% if form.non_field_error %}
-
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
         {% endif %}
         {% for field in form %}
             <div class="form-group">
