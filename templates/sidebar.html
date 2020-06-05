@@ -1,6 +1,6 @@
 <div class="blog-aside">
     <aside>
-        {% if  settings.USE_ELASTICSEARCH %}
+        {% if  USE_ELASTICSEARCH %}
             <form class="form-inline " action="{% url "blog:es_search" %}" method="get" style="margin-bottom: 15px">
                 <input class="form-control mr-1 form-control-sm " name="q" id="q" type="search" aria-label="Search"
                        style="width: 70%" placeholder="es 搜索">

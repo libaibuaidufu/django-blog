@@ -43,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
-    # "django_elasticsearch_dsl",
     'mdeditor',
     'users',
     'blog',
 ]
+
 AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "blog.context_processors.seo_processor"
             ],
         },
     },
@@ -166,3 +167,8 @@ ELASTICSEARCH_DSL = {
     },
 }
 USE_ELASTICSEARCH = False
+
+if USE_ELASTICSEARCH:
+    INSTALLED_APPS += [
+        "django_elasticsearch_dsl",
+    ]
