@@ -1,7 +1,6 @@
 /.idea/
-*.pyc
 __pycache__/
-db.sqlite3
 collectstatic/
-
 *.db
+*.sqlite3
+*.pyc
