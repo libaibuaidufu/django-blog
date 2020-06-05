@@ -140,7 +140,6 @@ class CommentPostView(FormView):
         u = self.request.user
 
         if self.request.user.is_authenticated:
-            print("In")
             form.fields.update({
                 'email': forms.CharField(widget=forms.HiddenInput()),
                 'name': forms.CharField(widget=forms.HiddenInput()),

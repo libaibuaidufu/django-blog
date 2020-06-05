@@ -26,7 +26,6 @@ def get_md5(str):
 
 
 def send_email(emailto, title, content):
-    print("in")
     from blog_co.blog_signals import send_email_signal
     send_email_signal.send(
         send_email.__class__,
