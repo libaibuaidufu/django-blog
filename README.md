@@ -1,6 +1,8 @@
 # blog-co
 本文 学习、借鉴了 [DjangoBlog](https://github.com/liangliangyy/DjangoBlog).
 
+**参考网址：http://121.199.27.219:8000/ ，登录：username:dfk,password:dfk123456**
+
 ## 主要区别
 使用bootstrap4 写的前端样式
 后端基本一致，没有那么复杂，例如缓存 压缩等功能都没有加入。
