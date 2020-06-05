@@ -15,17 +15,18 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.views.static import serve
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url("", include("blog.urls")),
-    url("", include("users.urls")),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),  # 这部分很重要
-    url(r'^search/', include('haystack.urls')),
-]
-
-if not settings.DEBUG:
-    urlpatterns += [url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATICFILES})]
+                  path('admin/', admin.site.urls),
+                  url("", include("blog.urls")),
+                  url("", include("users.urls")),
+                  url(r'^search/', include('haystack.urls')),
+                  # re_path('^stiaic/(?P<path>.*)', serve, {'document_root': settings.STATIC_ROOT}),  # 用于处理static里的文件
+                  # re_path('^media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),  # 用于处理上传的文件
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,9 @@
 /.idea/
 __pycache__/
-collectstatic/
+collectedstatic/
+static/admin
+static/mdeditor
+static/suit
 *.db
 *.sqlite3
 *.pyc
