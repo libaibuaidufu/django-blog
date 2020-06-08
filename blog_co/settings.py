@@ -75,7 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',  # 配置图片
-                "blog.context_processors.seo_processor",  #
+                "blog.context_processors.seo_processor",  # 模板配置文件信息 获取
             ],
         },
     },

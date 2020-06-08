@@ -57,3 +57,4 @@ from six import python_2_unicode_compatible
 ### 预览
  ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_one.png)
  ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_two.png)
+ ![image](https://github.com/libaibuaidufu/django-blog/blob/master/preview_three.png)
