@@ -7,3 +7,4 @@ static/suit
 *.db
 *.sqlite3
 *.pyc
+blog_co/whoosh_index/*
