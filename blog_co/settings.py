@@ -51,9 +51,9 @@ AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',  # 站点缓存加入
+    # 'django.middleware.cache.UpdateCacheMiddleware',  # 站点缓存加入 # 静态网页可以使用 这个不适用
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',  # 站点缓存加入
+    # 'django.middleware.cache.FetchFromCacheMiddleware',  # 站点缓存加入
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

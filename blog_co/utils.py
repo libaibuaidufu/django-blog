@@ -6,13 +6,10 @@
 @author  : dfkai
 @Software: PyCharm
 """
-
 import logging
 from hashlib import md5
 
 import mistune
-from django.conf import settings
-from mistune import escape, escape_link
 from pygments import highlight
 from pygments.formatters import html
 from pygments.lexers import get_lexer_by_name
@@ -62,45 +59,19 @@ def block_code(text, lang, inlinestyles=False, linenos=False):
         )
 
 
-class BlogMarkDownRenderer(mistune.Renderer):
-    '''
-    markdown渲染
-    '''
-
-    def block_code(self, text, lang=None):
-        # renderer has an options
-        inlinestyles = self.options.get('inlinestyles')
-        linenos = self.options.get('linenos')
-        return block_code(text, lang, inlinestyles, linenos)
-
-    def autolink(self, link, is_email=False):
-        text = link = escape(link)
-
-        if is_email:
-            link = 'mailto:%s' % link
-        if not link:
-            link = "#"
-        site = settings.SITE  # get_current_site()
-        nofollow = "" if link.find(site) > 0 else "rel='nofollow'"
-        return '<a href="%s" %s>%s</a>' % (link, nofollow, text)
-
-    def link(self, link, title, text):
-        link = escape_link(link)
-        site = settings.SITE  # get_current_site()
-        nofollow = "" if link.find(site) > 0 else "rel='nofollow'"
-        if not link:
-            link = "#"
-        if not title:
-            return '<a href="%s" %s>%s</a>' % (link, nofollow, text)
-        title = escape(title, quote=True)
-        return '<a href="%s" title="%s" %s>%s</a>' % (
-            link, title, nofollow, text)
+class HighlightRenderer(mistune.HTMLRenderer):
+    def block_code(self, code, lang=None):
+        if lang:
+            lexer = get_lexer_by_name(lang, stripall=True)
+            formatter = html.HtmlFormatter()
+            return highlight(code, lexer, formatter)
+        return '<pre><code>' + mistune.escape(code) + '</code></pre>'
 
 
 class CommonMarkdown():
     @staticmethod
     def get_markdown(value):
-        renderer = BlogMarkDownRenderer(inlinestyles=False)
+        markdown = mistune.create_markdown(renderer=HighlightRenderer())
+        return markdown(value)
 
-        mdp = mistune.Markdown(escape=True, renderer=renderer)
-        return mdp(value)
+
