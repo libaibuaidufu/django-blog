@@ -51,7 +51,9 @@ AUTH_USER_MODEL = "users.UserProfile"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',  # 站点缓存加入
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',  # 站点缓存加入
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -173,3 +175,15 @@ if USE_ELASTICSEARCH:
     INSTALLED_APPS += [
         "django_elasticsearch_dsl",
     ]
+
+# 缓存配置 https://docs.djangoproject.com/zh-hans/3.0/topics/cache/
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'TIMEOUT': 10800,
+    }
+}
+CACHE_MIDDLEWARE_ALIAS = "default"  # 用于存储的缓存别名。
+CACHE_MIDDLEWARE_KEY_PREFIX = "django_co"  # 缓存key 前缀
+CACHE_MIDDLEWARE_SECONDS = 600  # 缓存时间 默认 600
